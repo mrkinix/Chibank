@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Dashboard from './components/dashboard'
+import Login from './components/login'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+	render () {
+		return (
+			<Router>
+				<Route exact path="/">
+					<Dashboard></Dashboard>
+				</Route>
+			<Route path="/login">
+					<Login></Login>
+				</Route>
+		  	</Router>
+		)
+	}
 }
+  
+
 
 export default App;
+
+/*
+TODO:
+	* Add send transactions to available profiles
+	* List activity
+	* Add mobile support
+*/

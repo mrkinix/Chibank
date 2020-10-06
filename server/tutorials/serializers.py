@@ -23,3 +23,14 @@ class UserSerializer(serializers.ModelSerializer):
                   'balance',
                   'transactions'
                   )
+
+
+class DataSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = (
+            'first_name',
+            'last_name',
+            'email'
+        )

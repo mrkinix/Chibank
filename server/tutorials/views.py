@@ -3,9 +3,10 @@ from django.shortcuts import render
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
- 
+from rest_framework.response import Response
+
 from tutorials.models import Tutorial, User
-from tutorials.serializers import TutorialSerializer, UserSerializer
+from tutorials.serializers import TutorialSerializer, UserSerializer, DataSerializer
 from rest_framework.decorators import api_view
 
 
@@ -34,14 +35,8 @@ def tutorial_list(request):
 @api_view(['GET', 'POST', 'DELETE'])
 def user(request):
     if request.method == 'GET':
-        users = User.objects.all()
-
-        email = request.GET.get('email', None)
-        pwd = request.GET.get('password', None)
-        if email and pwd is not None:
-            users = users.filter(email=email, password=pwd)
-
-        user_serializer = UserSerializer(users, many=True)
+        users = User.objects.values('first_name', 'last_name', 'email')
+        user_serializer = DataSerializer(users, many=True)
         return JsonResponse(user_serializer.data, safe=False)
 
     elif request.method == 'POST':
@@ -56,6 +51,7 @@ def user(request):
 @api_view(['POST'])
 def user_connection(request):
     user_data = JSONParser().parse(request)
+    print(user_data)
     email = user_data['email']
     pwd = user_data['password']
     res = User.objects.get(email=email)
@@ -69,22 +65,27 @@ def user_connection(request):
 
 @api_view(['POST'])
 def user_transaction(request):
-    # add cookies to verify
+    # TODO: add cookies
     user_data = JSONParser().parse(request)
     email = user_data['email']
     destination = user_data['destination']
     amount = user_data['amount']
     res = User.objects.get(email=email)
     res1 = User.objects.get(email=destination)
-    if email is not None:
-        res.balance += amount
-        res.balance -= amount
-        user_serializer1 = UserSerializer(data=res1)
-        user_serializer = UserSerializer(data=res)
-        if user_serializer.is_valid():
-            user_serializer.save()
 
-        if user_serializer.is_valid():
-            user_serializer1.save()
+    str0 = "You payed {} {} €.".format(user_data['receiver'], amount)
+    str1 = "{} payed you {} €.".format(user_data['sender'], amount)
 
-        return JsonResponse(status=status.HTTP_201_CREATED)
+    res.transactions.append(str0)
+    res1.transactions.append(str1)
+    User.objects.filter(email=email).update(balance=res.balance-amount,
+                                            transactions=res.transactions)
+    User.objects.filter(email=destination).update(balance=res1.balance+amount,
+                                                  transactions=res1.transactions)
+
+    print(res.transactions)
+    return Response({'balance': res.balance}, status=status.HTTP_201_CREATED)
+    # TODO: create transaction details
+
+
+
