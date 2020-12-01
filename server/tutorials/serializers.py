@@ -34,3 +34,15 @@ class DataSerializer(serializers.ModelSerializer):
             'last_name',
             'email'
         )
+
+
+class UserInfoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('first_name',
+                  'last_name',
+                  'email',
+                  'balance',
+                  'transactions'
+                  )

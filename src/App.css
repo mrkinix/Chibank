@@ -109,13 +109,15 @@ h1 {
 
 .activity {
 	margin-top: 2.5%;
+	margin-bottom: 2.5%;
 	min-height: 38vh;
-	max-height: 42vh;
 	margin-left: 2.5%;
 	width: 95%;
 	border-radius: 8px;
-	height: 100%;
+	height: auto;
 	background: rgb(22, 22, 22);
+	overflow-y: auto;
+	padding-bottom: 70px;
 }
 
 .img {

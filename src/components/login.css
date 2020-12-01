@@ -1,0 +1,92 @@
+.main-container {
+	position: fixed;
+	background: black;
+	height: 100%;
+	width: 100%;
+	overflow: scroll;
+	overflow-x: hidden;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.btns {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.ctr {
+    display: flex;
+    width: 100vw;
+    align-content: space-between;
+    justify-content: center;
+}
+
+
+.sep {
+    margin-left: 12px;
+}
+
+.btn {
+    background: grey;
+    padding: 5px 20px;
+    margin: .5%;
+    font-size: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.b1 {
+	background: rgb(0, 132, 255);
+}
+
+.b1:hover {
+    background: rgb(8, 136, 255);   
+    transform: scale(.98);
+}
+
+.b2 {
+    border: 2px solid rgb(0, 132, 255);
+    background: black;
+}
+
+.b2:hover {
+    background: rgba(8, 136, 255, 0.15);   
+    transform: scale(.98);
+}
+
+input {
+    border-radius: 2px;
+    border: none;
+    padding: 5px;
+    margin: 5px 0
+}
+
+#btn {
+    padding: 5px 22px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+h4 {
+    line-height: 32px;
+}
+
+#btn:hover {
+    background: rgb(225, 225, 255);
+    transform: scale(.98);
+}
